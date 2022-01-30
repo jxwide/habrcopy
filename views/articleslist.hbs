@@ -9,32 +9,34 @@
     {{> header}}
 
     <div class="infoofblock">
-        <p class="p_infoofblock">Все потоки</p>
+        <p class="p_infoofblock">{{name_of_cat}}</p>
         <a href="" class="span_a">За сегодня</a>
         <a href="" class="span_a">За неделю</a>
     </div>
 
     <div class="mainblock">
+        {{#each arc}}
         <div class="article">
             <div class="row author_row">
-                <span class="author_span">Alexander428</span>
-                <span class="time_span">сегодня в 11:49</span>
+                <span class="author_span">{{this.author}}</span>
+                <span class="time_span">{{this.createDate}}</span>
             </div>
             <div class="row title_row">
-                <span class="title_span">Эволюция разумна?</span>
+                <span class="title_span">{{this.title}}</span>
             </div>
             <div class="row tags_row">
-                <span class="tags_span">Rust, Биология, ИИ</span>
+                <span class="tags_span">{{this.tags}}</span>
             </div>
             <div class="row text_row">
                 <span class="text_row">
-                    Приветствую, хабрчане! Сегодня речь пойдёт об одном, на мой взгляд, интересном варианте алгоритма для самообучающейся системы. Идея подобной статьи зрела давно, однаĸо руĸи всё не доходили.
+                    {{this.textDesc}}
                 </span>
             </div>
             <div class="row btn_row">
                 <a href="/" class="span_a">Читать далее</a>
             </div>
         </div>
+        {{/each}}
     </div>
 </body>
 </html>
