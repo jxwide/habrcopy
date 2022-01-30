@@ -15,10 +15,6 @@ const start = async () => {
     app.get('/', (req, res) => {
         res.redirect('/category/all/week')
     })
-
-    app.get('/test', (req, res) => {
-        res.render('article.hbs')
-    })
     app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }
 

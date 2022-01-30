@@ -14,10 +14,8 @@ class catController {
     async cattime(req, res) {
         let {category, time} = req.params;
 
-        
 
-
-        // lastweekdate
+        // getting -week date
         let stringdate = '';
         var date = new Date();
 
@@ -36,7 +34,7 @@ class catController {
         stringdate += day;
         var intdate = parseInt(stringdate);
 
-        // nowdate
+        // getting now date
         let nowstringdate = '';  
         let d = new Date();
         nowstringdate += d.getFullYear();
@@ -47,8 +45,6 @@ class catController {
         if (day.length == 1) day = '0' + day;
         nowstringdate += day;
         var nowdate = parseInt(nowstringdate);
-        
-        //console.log(stringdate)
 
         let nofc = ''; // name of category
         if (category == 'all') nofc = 'Все потоки';
@@ -57,13 +53,10 @@ class catController {
         if (category == 'design') nofc = 'Дизайн';
         if (category == 'marketing') nofc = 'Маркетинг';
 
-        
-        //
         let query = '';
         if (category == 'all')
         {
             query = "SELECT * FROM `articles` WHERE `createDate` between ? and ?";
-            console.log(query) // test
             pool.query(query, [intdate, nowdate], (err, rrr) => {
                 if(err) console.log(err);
                 rrr.reverse(); // test
@@ -76,7 +69,6 @@ class catController {
             });
         } else {
             query = "SELECT * FROM `articles` WHERE `categoryName` = ? and `createDate` between ? and ?";
-            console.log(query) // test
             pool.query(query, [category, intdate, nowdate], (err, rrr) => {
                 if(err) console.log(err);
                 rrr.reverse(); // test
@@ -92,14 +84,14 @@ class catController {
     }
 
     async catpost(req, res) {
-        let {category, time, postid} = req.params;
+        let {postid} = req.params;
 
         let query = "SELECT * FROM `articles` WHERE `id` = ?";
 
         pool.query(query, [postid], (err, rrr) => {
             if(err) console.log(err);
 
-            if (query[0] == undefined) return res.send('404');
+            if (rrr[0] == undefined) return res.send('404');
 
             res.render('article.hbs', {
                 author: rrr[0]['author'],
