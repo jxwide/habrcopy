@@ -34,7 +34,19 @@ class catController {
         let day = date.getDate() + '';
         if (day.length == 1) day = '0' + day;
         stringdate += day;
-        
+        var intdate = parseInt(stringdate);
+
+        // nowdate
+        let nowstringdate = '';  
+        let d = new Date();
+        nowstringdate += d.getFullYear();
+        month = d.getMonth() + 1 + '';
+        if (month.length == 1) month = '0' + month;
+        nowstringdate += month;
+        day = d.getDate() + '';
+        if (day.length == 1) day = '0' + day;
+        nowstringdate += day;
+        var nowdate = parseInt(nowstringdate);
         
         //console.log(stringdate)
 
@@ -45,16 +57,56 @@ class catController {
         if (category == 'design') nofc = 'Дизайн';
         if (category == 'marketing') nofc = 'Маркетинг';
 
-        var intdate = parseInt(stringdate);
+        
         //
-        let query = "SELECT * FROM `articles` WHERE 'createDate' <= ? AND `categoryName` = ?";
-        pool.query(query, [intdate, category], (err, rrr) => {
-            if(err) console.log(err);
-            //console.log(rrr);
+        let query = '';
+        if (category == 'all')
+        {
+            query = "SELECT * FROM `articles` WHERE `createDate` between ? and ?";
+            console.log(query) // test
+            pool.query(query, [intdate, nowdate], (err, rrr) => {
+                if(err) console.log(err);
+                rrr.reverse(); // test
+                res.render('articleslist.hbs', {
+                    name_of_cat: nofc,
+                    arc: rrr,
+                    catinurl: category,
+                    timeinurl: time
+                })
+            });
+        } else {
+            query = "SELECT * FROM `articles` WHERE `categoryName` = ? and `createDate` between ? and ?";
+            console.log(query) // test
+            pool.query(query, [category, intdate, nowdate], (err, rrr) => {
+                if(err) console.log(err);
+                rrr.reverse(); // test
+                res.render('articleslist.hbs', {
+                    name_of_cat: nofc,
+                    arc: rrr,
+                    catinurl: category,
+                    timeinurl: time
+                })
+            });
+        }
 
-            res.render('articleslist.hbs', {
-                name_of_cat: nofc,
-                arc: rrr
+    }
+
+    async catpost(req, res) {
+        let {category, time, postid} = req.params;
+
+        let query = "SELECT * FROM `articles` WHERE `id` = ?";
+
+        pool.query(query, [postid], (err, rrr) => {
+            if(err) console.log(err);
+
+            if (query[0] == undefined) return res.send('404');
+
+            res.render('article.hbs', {
+                author: rrr[0]['author'],
+                time: rrr[0]['createDate'],
+                title: rrr[0]['title'],
+                tags: rrr[0]['tags'],
+                textt: rrr[0]['textFull']
             })
         });
     }

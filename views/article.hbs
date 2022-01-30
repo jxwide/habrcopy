@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}}
+    {{> style}}
+    {{> mediastyle}}
+</head>
+<body>
+    {{> header}}
+
+    <div class="mainblock artmob">
+        
+        <div class="article">
+            <div class="row author_row">
+                <span class="author_span">{{author}}</span>
+                <span class="time_span">{{time}}</span>
+            </div>
+            <div class="row title_row">
+                <span class="title_span">{{title}}</span>
+            </div>
+            <div class="row tags_row">
+                <span class="tags_span">{{tags}}</span>
+            </div>
+            <div class="row text_row">
+                <span class="text_row text_span">
+                    {{{textt}}}
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

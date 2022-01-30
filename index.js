@@ -13,11 +13,11 @@ app.use("/category", catRouter)
 
 const start = async () => {
     app.get('/', (req, res) => {
-        res.render('index.hbs')
+        res.redirect('/category/all/week')
     })
 
     app.get('/test', (req, res) => {
-        res.render('articleslist.hbs')
+        res.render('article.hbs')
     })
     app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 }

@@ -10,8 +10,8 @@
 
     <div class="infoofblock">
         <p class="p_infoofblock">{{name_of_cat}}</p>
-        <a href="" class="span_a">За сегодня</a>
-        <a href="" class="span_a">За неделю</a>
+        <a href="/category/{{catinurl}}/today" class="span_a">За сегодня</a>
+        <a href="/category/{{catinurl}}/week" class="span_a">За неделю</a>
     </div>
 
     <div class="mainblock">
@@ -33,7 +33,7 @@
                 </span>
             </div>
             <div class="row btn_row">
-                <a href="/" class="span_a">Читать далее</a>
+                <a href="/category/{{this.categoryName}}/week/post/{{this.id}}" class="span_a">Читать далее</a>
             </div>
         </div>
         {{/each}}
