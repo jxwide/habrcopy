@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{> head}}
+    {{> style}}
+    {{> mediastyle}}
+</head>
+<body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+    {{> header}}
+
+
+
+    <div class="mainblock editormain">
+
+        <div class="tagsbtns">
+            <button class="tagbtn btn_br">&ltbr&gt</button>
+
+            <button class="tagbtn btn_h1">&lth1&gt</button>
+            <button class="tagbtn btn_h2">&lth2&gt</button>
+            <button class="tagbtn btn_h3">&lth3&gt</button>
+            <button class="tagbtn btn_h4">&lth4&gt</button>
+            <button class="tagbtn btn_h5">&lth5&gt</button>
+            <button class="tagbtn btn_p">&ltp&gt</button>
+            <button class="tagbtn btn_b">&ltb&gt</button>
+            <button class="tagbtn btn_a">&lta&gt</button>
+        </div>
+
+        <form class="taform" method="post">
+            <textarea name="ta" id="ta" cols="50" rows="25"></textarea>
+            <input type="text" class="catinp" name="catname" placeholder="Название категории">
+            <input type="text" class="catinp" name="cattitle" placeholder="Заголовок">
+            <input type="text" class="catinp" name="catdesc" placeholder="Описание">
+            <input type="submit" class="catinp" value="Сохранить">
+        </form>
+
+        <small>После того, как вы сохраните статью, ее проверит модератор.
+            <br> Если будет все хорошо, то она окажется публичной.
+            <br> В названии категории введите аббревиатуру категории:
+            <br> Разработка - dev, Администрирование - admin,
+            <br> Дизайн - design, Маркетинг - marketing
+        </small>
+        
+        
+    </div>
+
+
+    <script>
+        function insertText( id, text ) {
+        //ищем элемент по id
+            var txtarea = document.getElementById(id);
+            //ищем первое положение выделенного символа
+            var start = txtarea.selectionStart;
+            //ищем последнее положение выделенного символа
+            var end = txtarea.selectionEnd;
+            // текст до + вставка + текст после (если этот код не работает, значит у вас несколько id)
+            var finText = txtarea.value.substring(0, start) + text + txtarea.value.substring(end);
+            // подмена значения
+            txtarea.value = finText;
+            // возвращаем фокус на элемент
+            txtarea.focus();
+            // возвращаем курсор на место - учитываем выделили ли текст или просто курсор поставили
+            txtarea.selectionEnd = ( start == end )? (end + text.length) : end ;
+        }
+
+        $('.btn_br').click(() => insertText('ta', '<br>'));
+
+        $('.btn_h1').click(() => insertText('ta', '<h1></h1>'));
+        $('.btn_h2').click(() => insertText('ta', '<h2></h2>'));
+        $('.btn_h3').click(() => insertText('ta', '<h3></h3>'));
+        $('.btn_h4').click(() => insertText('ta', '<h4></h4>'));
+        $('.btn_h5').click(() => insertText('ta', '<h5></h5>'));
+        $('.btn_p').click(() => insertText('ta', '<p></p>'));
+        $('.btn_b').click(() => insertText('ta', '<b></b>'));
+        $('.btn_a').click(() => insertText('ta', '<a href=""></a>'));
+    </script>
+</body>
+</html>

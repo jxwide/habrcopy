@@ -10,6 +10,12 @@
 
     <div class="mainblock artmob">
         
+        {{#unless verified}}
+        <div class="verifystatus">
+            <p>Внимание! Статья не проверена. В ней может содержаться запрещенный контент.</p>
+        </div>
+        {{/unless}}
+
         <div class="article">
             <div class="row author_row">
                 <span class="author_span">{{author}}</span>

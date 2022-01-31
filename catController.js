@@ -56,7 +56,7 @@ class catController {
         let query = '';
         if (category == 'all')
         {
-            query = "SELECT * FROM `articles` WHERE `createDate` between ? and ?";
+            query = "SELECT * FROM `articles` WHERE `verified` = 2 AND `createDate` between ? and ?";
             pool.query(query, [intdate, nowdate], (err, rrr) => {
                 if(err) return console.log(err);
                 //console.log('articles :' + rrr.length)
@@ -69,7 +69,7 @@ class catController {
                 })
             });
         } else {
-            query = "SELECT * FROM `articles` WHERE `categoryName` = ? and `createDate` between ? and ?";
+            query = "SELECT * FROM `articles` WHERE `categoryName` = ? AND `verified` = 2 and `createDate` between ? and ?";
             pool.query(query, [category, intdate, nowdate], (err, rrr) => {
                 if(err) return console.log(err);
                 rrr.reverse(); // test
@@ -94,12 +94,21 @@ class catController {
 
             if (rrr[0] == undefined) return res.send('404');
 
+            let banned = false;
+            let verify = false;
+
+            if (rrr[0]['verified'] == 0) banned = true;
+            if (rrr[0]['verified'] == 1) verify = false;
+            if (rrr[0]['verified'] == 2) verify = true;
+
             res.render('article.hbs', {
                 author: rrr[0]['author'],
                 time: rrr[0]['createDate'],
                 title: rrr[0]['title'],
                 tags: rrr[0]['tags'],
-                textt: rrr[0]['textFull']
+                textt: rrr[0]['textFull'],
+                verified: verify,
+                ban: banned
             })
         });
     }
