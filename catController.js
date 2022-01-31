@@ -58,7 +58,8 @@ class catController {
         {
             query = "SELECT * FROM `articles` WHERE `createDate` between ? and ?";
             pool.query(query, [intdate, nowdate], (err, rrr) => {
-                if(err) console.log(err);
+                if(err) return console.log(err);
+                //console.log('articles :' + rrr.length)
                 rrr.reverse(); // test
                 res.render('articleslist.hbs', {
                     name_of_cat: nofc,
@@ -70,7 +71,7 @@ class catController {
         } else {
             query = "SELECT * FROM `articles` WHERE `categoryName` = ? and `createDate` between ? and ?";
             pool.query(query, [category, intdate, nowdate], (err, rrr) => {
-                if(err) console.log(err);
+                if(err) return console.log(err);
                 rrr.reverse(); // test
                 res.render('articleslist.hbs', {
                     name_of_cat: nofc,
@@ -89,7 +90,7 @@ class catController {
         let query = "SELECT * FROM `articles` WHERE `id` = ?";
 
         pool.query(query, [postid], (err, rrr) => {
-            if(err) console.log(err);
+            if(err) return console.log(err);
 
             if (rrr[0] == undefined) return res.send('404');
 
