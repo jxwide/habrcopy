@@ -2,8 +2,8 @@ const express = require('express')
 const app = express()
 const hbs = require('hbs')
 const path = require('path')
-const catRouter = require('./catRouter')
-const indexRouter = require('./indexRouter')
+const catRouter = require(path.resolve(__dirname, 'router', 'category.js'))
+const indexRouter = require(path.resolve(__dirname, 'router', 'index.js'))
 const port = process.env.PORT || 3000
 
 // hbs

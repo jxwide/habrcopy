@@ -1,6 +1,7 @@
 const Router = require('express')
 const router = new Router()
-const controller = require('./indexController')
+const path = require('path')
+const controller = require(path.resolve(__dirname, '..', 'controllers', 'index.js'))
 
 const urlencodedParser = Router.urlencoded({extended: false});
 

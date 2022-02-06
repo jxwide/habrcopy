@@ -1,6 +1,7 @@
 const Router = require('express')
+const path = require('path')
 const router = new Router()
-const controller = require('./catController')
+const controller = require(path.resolve(__dirname, '..', 'controllers', 'category.js'))
 const urlencodedParser = Router.urlencoded({extended: false});
 
 router.get('/:category/:time', controller.cattime)
