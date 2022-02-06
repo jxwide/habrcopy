@@ -34,6 +34,27 @@
             </div>
         </div>
         
+        <div class="dropcomment">
+            <p class="commst">Оставьте свой комментарий</p>
+
+            <form method="post">
+                <textarea name="commtext" rows="5" cols="45" columns="5" type="text" class="dcomm"></textarea>
+                    <br>
+                <input type="submit" class="span_a sb">
+            </form>
+        </div>
+
+        <div class="comments">
+            <p class="commst">Комментарии <span class="span_comms_count">50</span></p>
+
+            {{#each cms}}
+            <div class="comment">
+                <p class="comm_author author_span">{{this.author}}</p>
+                <p class="comm_text">{{this.text}}</p>
+            </div>
+            {{/each}}
+
+        </div>
     </div>
 </body>
 </html>

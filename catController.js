@@ -101,15 +101,44 @@ class catController {
             if (rrr[0]['verified'] == 1) verify = false;
             if (rrr[0]['verified'] == 2) verify = true;
 
-            res.render('article.hbs', {
-                author: rrr[0]['author'],
-                time: rrr[0]['createDate'],
-                title: rrr[0]['title'],
-                tags: rrr[0]['tags'],
-                textt: rrr[0]['textFull'],
-                verified: verify,
-                ban: banned
-            })
+            // gettings comments 
+            pool.query("SELECT * FROM `comments` WHERE `acticle_id` = ?", [postid], (err, result) => {
+                if(err) return console.log(err)
+                
+
+                res.render('article.hbs', {
+                    author: rrr[0]['author'],
+                    time: rrr[0]['createDate'],
+                    title: rrr[0]['title'],
+                    tags: rrr[0]['tags'],
+                    textt: rrr[0]['textFull'],
+                    verified: verify,
+                    ban: banned,
+                    cms: result
+                })
+            });
+            //
+
+
+        });
+    }
+
+    async newcomm(req, res) {
+        if(!req.body) return res.status(400);
+
+        let {postid} = req.params;
+        let {commtext} = req.body;
+        //console.log(req.body)
+        //commtext
+
+        if (commtext.length > 1200) return 1; // change later
+
+        let query = "INSERT INTO `comments` (`acticle_id`, `author`, `text`) VALUES (?, ?, ?)";
+
+        pool.query(query, [postid, 'anonimius', commtext], (err, rrr) => {
+            if(err) return console.log(err);
+            
+            res.redirect(req.get('referer')); // refresh page ???
         });
     }
 }
